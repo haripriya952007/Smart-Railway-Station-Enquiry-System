@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Railway Station Enquiry</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Welcome Section */
+        .hero {
+            text-align: center;
+            padding: 65px 20px;
+            background: linear-gradient(135deg, #dceeff, #eef7ff);
+        }
+
+        .hero h2 {
+            color: #123c69;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #475569;
+            font-size: 17px;
+            margin-bottom: 25px;
+        }
+
+        /* Main Button */
+        .main-btn {
+            background: #123c69;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .main-btn:hover {
+            background: #2563a6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 55px 25px;
+            background: #f4f7fb;
+            text-align: center;
+        }
+
+        .services-section h2 {
+            color: #123c69;
+            font-size: 30px;
+            margin-bottom: 35px;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 28px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            transition: 0.3s ease;
+            cursor: pointer;
+            border-top: 4px solid #123c69;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+        }
+
+        .service-icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            color: #123c69;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Home Message */
+        #homeMessage:empty {
+            display: none;
+        }
+
+        #homeMessage:not(:empty) {
+            background: white;
+            color: #123c69;
+            padding: 15px;
+            margin: 25px auto 0;
+            max-width: 550px;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .services-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 45px 15px;
+            }
+
+            .hero h2 {
+                font-size: 27px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .services-section {
+                padding: 40px 15px;
+            }
+
+            .services-section h2 {
+                font-size: 25px;
+            }
+
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                max-width: 350px;
+                width: 100%;
+                margin: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🚆 Smart Railway Station Enquiry</h1>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="data%20base/trains.html">Train Enquiry</a>
+            <a href="data%20base/facilities.html">Facilities</a>
+            <a href="data%20base/announcements.html">Announcements</a>
+            <a href="data%20base/station-status.html">Station Status</a>
+            <a href="data%20base/fare.html">Fare Details</a>
+            <a href="data%20base/booking.html">Book Ticket</a>
+        </nav>
+    </header>
+
+    <!-- Welcome Section -->
+    <section id="home" class="hero">
+
+        <h2>🚉 Welcome to Smart Railway Station</h2>
+
+        <p>
+            Find train timings, platform information and station facilities easily.
+        </p>
+
+        <button class="main-btn" onclick="showMessage()">
+            🚆 Start Enquiry
+        </button>
+
+        <p id="homeMessage" aria-live="polite"></p>
+
+    </section>
+
+    <!-- Railway Services -->
+    <section class="services-section">
+
+        <h2>Our Railway Services</h2>
+
+        <div class="services-container">
+
+            <!-- Train Enquiry -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/trains.html'">
+
+                <div class="service-icon">🚆</div>
+                <h3>Train Enquiry</h3>
+                <p>Search trains and view train information.</p>
+
+            </div>
+
+            <!-- Train Schedule -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/schedule.html'">
+
+                <div class="service-icon">📅</div>
+                <h3>Train Schedule</h3>
+                <p>View train timings and schedules.</p>
+
+            </div>
+
+            <!-- Stations -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/stations.html'">
+
+                <div class="service-icon">🚉</div>
+                <h3>Explore Stations</h3>
+                <p>Find railway station information.</p>
+
+            </div>
+
+            <!-- Fare -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/fare.html'">
+
+                <div class="service-icon">💰</div>
+                <h3>Fare Details</h3>
+                <p>Check train fare information.</p>
+
+            </div>
+
+            <!-- Station Status -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/station-status.html'">
+
+                <div class="service-icon">📍</div>
+                <h3>Station Status</h3>
+                <p>Check station services and status.</p>
+
+            </div>
+
+            <!-- Facilities -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/facilities.html'">
+
+                <div class="service-icon">🏢</div>
+                <h3>Station Facilities</h3>
+                <p>Explore passenger facilities.</p>
+
+            </div>
+
+            <!-- Announcements -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/announcements.html'">
+
+                <div class="service-icon">📢</div>
+                <h3>Announcements</h3>
+                <p>Read railway notices and updates.</p>
+
+            </div>
+
+            <!-- Booking -->
+            <div class="service-card"
+                onclick="window.location.href='data%20base/booking.html'">
+
+                <div class="service-icon">🎫</div>
+                <h3>Book Ticket</h3>
+                <p>Enter passenger details and make a demo booking.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+
+        <p>© 2026 Smart Railway Station Enquiry System</p>
+
+        <p>Designed for College Project</p>
+
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>

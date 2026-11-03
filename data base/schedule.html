@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Train Schedule</title>
+
+<link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+<header>
+    <h1>🚆 Train Schedule</h1>
+
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="trains.html">Train Enquiry</a>
+        <a href="stations.html">Stations</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="fare.html">Fare</a>
+        <a href="announcements.html">Announcements</a>
+    </nav>
+</header>
+
+<section class="section">
+
+    <h2>📅 Train Schedule</h2>
+
+    <div id="scheduleResult">
+        <p>Loading schedule...</p>
+    </div>
+
+</section>
+
+<div style="text-align:center;">
+    <button
+        class="back-home"
+        onclick="window.location.href='../index.html'">
+        ⬅ Back to Home
+    </button>
+</div>
+
+<footer>
+    <p>© 2026 Smart Railway Station Enquiry System</p>
+</footer>
+
+<script>
+    async function loadSchedule() {
+
+        const result = document.getElementById("scheduleResult");
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/api/schedules"
+            );
+
+            if (!response.ok) {
+                throw new Error("Unable to load schedule");
+            }
+
+            const schedules = await response.json();
+
+            console.log("Schedule:", schedules);
+
+            if (!Array.isArray(schedules) || schedules.length === 0) {
+
+                result.innerHTML = `
+                    <div class="not-found">
+                        <h3>📅 No Schedule Available</h3>
+                        <p>No schedule records found in database.</p>
+                    </div>
+                `;
+
+                return;
+            }
+
+            let rows = "";
+
+            schedules.forEach(function(schedule) {
+
+                rows += `
+                    <tr>
+                        <td>${schedule.train_id ?? "-"}</td>
+                        <td>${schedule.station_id ?? "-"}</td>
+                        <td>${schedule.arrival_time ?? "-"}</td>
+                        <td>${schedule.departure_time ?? "-"}</td>
+                        <td>${schedule.stop_number ?? "-"}</td>
+                    </tr>
+                `;
+
+            });
+
+            result.innerHTML = `
+                <div style="
+                    width: 95%;
+                    max-width: 900px;
+                    margin: 30px auto;
+                    overflow-x: auto;
+                ">
+                    <table style="
+                        width: 100%;
+                        border-collapse: collapse;
+                        background-color: white;
+                        color: #222;
+                        border: 2px solid #123c69;
+                    ">
+                        <thead>
+                            <tr>
+                                <th style="padding:15px;background:#123c69;color:white;border:1px solid #ddd;">
+                                    Train ID
+                                </th>
+
+                                <th style="padding:15px;background:#123c69;color:white;border:1px solid #ddd;">
+                                    Station ID
+                                </th>
+
+                                <th style="padding:15px;background:#123c69;color:white;border:1px solid #ddd;">
+                                    Arrival Time
+                                </th>
+
+                                <th style="padding:15px;background:#123c69;color:white;border:1px solid #ddd;">
+                                    Departure Time
+                                </th>
+
+                                <th style="padding:15px;background:#123c69;color:white;border:1px solid #ddd;">
+                                    Stop Number
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            result.querySelectorAll("tbody td").forEach(function(cell) {
+                cell.style.padding = "15px";
+                cell.style.textAlign = "center";
+                cell.style.border = "1px solid #999";
+            });
+
+        } catch (error) {
+
+            console.error("Schedule error:", error);
+
+            result.innerHTML = `
+                <div class="not-found">
+                    <h3>❌ Unable to Load Schedule</h3>
+                    <p>Please make sure the backend server is running.</p>
+                </div>
+            `;
+
+        }
+
+    }
+
+    loadSchedule();
+</script>
+
+</body>
+</html>

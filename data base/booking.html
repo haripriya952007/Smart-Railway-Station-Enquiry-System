@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Ticket Booking</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef4fb;
+            margin: 0;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #0002;
+        }
+
+        h2 {
+            text-align: center;
+            color: #123c69;
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 18px;
+            background: #123c69;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0b2948;
+        }
+
+        #result {
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            white-space: pre-line;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>🚆 Train Ticket Booking</h2>
+
+    <form id="bookingForm">
+
+        <label>Passenger Name</label>
+        <input type="text" id="passenger_name" required>
+
+        <label>Age</label>
+        <input type="number" id="age" min="1" required>
+
+        <label>Gender</label>
+        <select id="gender">
+            <option value="">Select Gender</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label>Select Train</label>
+        <select id="train_id" required>
+            <option value="">Loading trains...</option>
+        </select>
+
+        <label>From Station</label>
+        <input type="text" id="from_station" required>
+
+        <label>To Station</label>
+        <input type="text" id="to_station" required>
+
+        <label>Journey Date</label>
+        <input type="date" id="journey_date" required>
+
+        <label>Number of Seats</label>
+        <input type="number" id="seats_booked" min="1" value="1" required>
+
+        <button type="button" id="checkButton">
+            Check Available Seats
+        </button>
+
+        <button type="submit">
+            Book Ticket
+        </button>
+    </form>
+
+    <div id="result">Enter journey details to check availability.</div>
+
+    <a href="../index.html">⬅ Back to Home</a>
+</div>
+
+<script>
+const trainSelect = document.getElementById("train_id");
+const result = document.getElementById("result");
+
+fetch("http://localhost:5000/api/trains")
+    .then(response => response.json())
+    .then(trains => {
+        trainSelect.innerHTML = '<option value="">Select Train</option>';
+
+        trains.forEach(train => {
+            const option = document.createElement("option");
+            option.value = train.id;
+            option.textContent =
+                train.train_number + " - " + train.train_name;
+            trainSelect.appendChild(option);
+        });
+    })
+    .catch(() => {
+        trainSelect.innerHTML =
+            '<option value="">Unable to load trains</option>';
+    });
+
+document.getElementById("checkButton").addEventListener("click", async () => {
+    const trainId = trainSelect.value;
+    const date = document.getElementById("journey_date").value;
+
+    if (!trainId || !date) {
+        result.textContent = "Please select a train and journey date.";
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/availability");
+        const data = await response.json();
+
+        const item = data.find(row =>
+            Number(row.train_id) === Number(trainId) &&
+            row.journey_date === date
+        );
+
+        if (!item) {
+            result.textContent =
+                "Availability not set for this train and date.";
+            return;
+        }
+
+        result.textContent =
+            "Train: " + item.train_name +
+            "\nAvailable Seats: " + item.available_seats;
+    } catch (error) {
+        result.textContent = "Unable to check availability.";
+    }
+});
+
+document.getElementById("bookingForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const booking = {
+        passenger_name: document.getElementById("passenger_name").value.trim(),
+        age: Number(document.getElementById("age").value),
+        gender: document.getElementById("gender").value,
+        train_id: Number(trainSelect.value),
+        from_station: document.getElementById("from_station").value.trim(),
+        to_station: document.getElementById("to_station").value.trim(),
+        journey_date: document.getElementById("journey_date").value,
+        seats_booked: Number(document.getElementById("seats_booked").value)
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/api/bookings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(booking)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            result.textContent = data.message || data.error || "Booking failed.";
+            return;
+        }
+
+        result.textContent =
+            "✅ Booking Successful!" +
+            "\nBooking ID: " + data.booking_id +
+            "\nPassenger: " + data.passenger_name +
+            "\nRemaining Seats: " + data.remaining_seats;
+
+        document.getElementById("bookingForm").reset();
+    } catch (error) {
+        result.textContent = "Unable to connect to booking server.";
+    }
+});
+</script>
+
+</body>
+</html>

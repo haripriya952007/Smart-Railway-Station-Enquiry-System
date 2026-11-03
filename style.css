@@ -1,0 +1,1115 @@
+/* =========================================
+   SMART RAILWAY STATION ENQUIRY
+   MAIN CSS
+========================================= */
+
+
+/* ================= RESET ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+
+    background-color: #f4f7fb;
+
+    color: #222;
+
+    line-height: 1.5;
+}
+
+
+/* ================= HEADER ================= */
+
+header {
+
+    background-color: #123c69;
+
+    color: white;
+
+    padding: 20px 40px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+header h1 {
+
+    font-size: 24px;
+
+}
+
+
+nav {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 20px;
+
+}
+
+
+nav a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+
+}
+
+
+nav a:hover {
+
+    color: #cfe8ff;
+
+    text-decoration: underline;
+
+}
+
+
+/* ================= HERO ================= */
+
+.hero {
+
+    text-align: center;
+
+    padding: 90px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dceeff,
+            #eef7ff
+        );
+
+}
+
+
+.hero h2 {
+
+    color: #123c69;
+
+    font-size: 36px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.hero p {
+
+    font-size: 18px;
+
+    margin-bottom: 25px;
+
+    color: #444;
+
+}
+
+
+/* ================= BUTTON ================= */
+
+button {
+
+    background-color: #123c69;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 22px;
+
+    margin: 5px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+
+}
+
+
+button:hover {
+
+    background-color: #0b2948;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ================= HOME MESSAGE ================= */
+
+#homeMessage {
+
+    width: 90%;
+
+    max-width: 600px;
+
+    margin: 20px auto 0;
+
+    padding: 15px;
+
+    background-color: white;
+
+    color: #123c69;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.08);
+
+    font-weight: bold;
+
+}
+
+
+/* ================= SECTIONS ================= */
+
+.section {
+
+    padding: 60px 30px;
+
+    text-align: center;
+
+}
+
+
+.section h2 {
+
+    color: #123c69;
+
+    margin-bottom: 30px;
+
+    font-size: 28px;
+
+}
+
+
+/* ================= TRAIN SECTION ================= */
+
+#trains {
+
+    background-color: #eef5fb;
+
+}
+
+
+/* ================= QUICK TRAINS ================= */
+
+.quick-trains {
+
+    width: 90%;
+
+    max-width: 750px;
+
+    margin: 0 auto 35px;
+
+}
+
+
+.quick-trains h3 {
+
+    color: #123c69;
+
+    margin-bottom: 18px;
+
+    font-size: 21px;
+
+}
+
+
+.quick-train-card {
+
+    background-color: white;
+
+    margin: 12px 0;
+
+    padding: 18px 22px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    text-align: left;
+
+    gap: 15px;
+
+    transition: 0.3s;
+
+}
+
+
+.quick-train-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0, 0, 0, 0.12);
+
+}
+
+
+.quick-train-card strong {
+
+    color: #123c69;
+
+    font-size: 16px;
+
+}
+
+
+.quick-train-card span {
+
+    color: #555;
+
+}
+
+
+/* ================= SEARCH ================= */
+
+.search-area {
+
+    margin-top: 20px;
+
+}
+
+
+#fromStation,
+#toStation,
+#trainInput {
+
+    width: 220px;
+
+    padding: 13px;
+
+    margin: 5px;
+
+    border:
+        1px solid #c7c7c7;
+
+    border-radius: 6px;
+
+    background-color: white;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+
+}
+
+
+#trainInput {
+
+    width: 280px;
+
+}
+
+
+#fromStation:focus,
+#toStation:focus,
+#trainInput:focus {
+
+    outline: none;
+
+    border-color: #123c69;
+
+    box-shadow:
+        0 0 5px
+        rgba(18, 60, 105, 0.25);
+
+}
+
+
+/* ================= TRAIN RESULT ================= */
+
+#trainResult {
+
+    margin-top: 25px;
+
+    min-height: 20px;
+
+}
+
+
+.train-table {
+
+    width: 95%;
+
+    max-width: 950px;
+
+    margin: 25px auto;
+
+    border-collapse: collapse;
+
+    background-color: white;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0, 0, 0, 0.1);
+
+}
+
+
+.train-table th,
+.train-table td {
+
+    border:
+        1px solid #ddd;
+
+    padding: 14px;
+
+    text-align: center;
+
+}
+
+
+.train-table th {
+
+    background-color: #123c69;
+
+    color: white;
+
+}
+
+
+.train-table tr:hover {
+
+    background-color: #f1f5f9;
+
+}
+
+
+/* ================= NOT FOUND ================= */
+
+.not-found {
+
+    width: 90%;
+
+    max-width: 550px;
+
+    margin: 25px auto;
+
+    padding: 20px;
+
+    background-color: #ffe5e5;
+
+    color: #b00020;
+
+    border-left:
+        5px solid #b00020;
+
+    border-radius: 8px;
+
+}
+
+
+.not-found h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+/* ================= SUCCESS MESSAGE ================= */
+
+.success-message {
+
+    width: 90%;
+
+    max-width: 650px;
+
+    margin: 20px auto;
+
+    padding: 20px;
+
+    background-color: #e8f5e9;
+
+    color: #16803c;
+
+    border:
+        1px solid #a5d6a7;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+}
+
+
+.success-message h3 {
+
+    color: #123c69;
+
+    margin-bottom: 10px;
+
+}
+
+
+.success-message p {
+
+    margin: 6px 0;
+
+}
+
+
+/* ================= STATUS ================= */
+
+#status {
+
+    background-color: #f8fafc;
+
+}
+
+
+.status-cards {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.status-card {
+
+    background-color: white;
+
+    width: 210px;
+
+    min-height: 140px;
+
+    padding: 25px 20px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.1);
+
+    transition: 0.3s;
+
+}
+
+
+.status-card:hover {
+
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0, 0, 0, 0.15);
+
+}
+
+
+.status-card h3 {
+
+    color: #123c69;
+
+    margin-bottom: 12px;
+
+}
+
+
+.status-open {
+
+    color: #16803c;
+
+    font-weight: bold;
+
+    font-size: 17px;
+
+}
+
+
+#status button {
+
+    margin-top: 30px;
+
+}
+
+
+#statusMessage {
+
+    width: 90%;
+
+    max-width: 650px;
+
+    margin: 20px auto 0;
+
+    padding: 20px;
+
+    background-color: #e8f5e9;
+
+    color: #16803c;
+
+    border:
+        1px solid #a5d6a7;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+}
+
+
+#statusMessage h3 {
+
+    color: #123c69;
+
+    margin-bottom: 10px;
+
+}
+
+
+#statusMessage p {
+
+    margin: 6px 0;
+
+}
+
+
+/* ================= FACILITIES ================= */
+
+#facilities {
+
+    background-color: #eef5fb;
+
+}
+
+
+.cards {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.card {
+
+    background-color: white;
+
+    width: 230px;
+
+    min-height: 220px;
+
+    padding: 25px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.1);
+
+    transition: 0.3s;
+
+}
+
+
+.card:hover {
+
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(0, 0, 0, 0.15);
+
+}
+
+
+.card h3 {
+
+    color: #123c69;
+
+    margin-bottom: 12px;
+
+}
+
+
+.card p {
+
+    line-height: 1.6;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* ================= FACILITY MESSAGE ================= */
+
+#facilityMessage {
+
+    width: 90%;
+
+    max-width: 650px;
+
+    margin: 25px auto 0;
+
+}
+
+
+/* ================= ANNOUNCEMENTS ================= */
+
+#announcements {
+
+    background-color: #f8fafc;
+
+}
+
+
+.announcement {
+
+    background-color: white;
+
+    width: 90%;
+
+    max-width: 650px;
+
+    padding: 20px;
+
+    margin: 15px auto;
+
+    border-left:
+        5px solid #123c69;
+
+    border-radius: 8px;
+
+    text-align: left;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0, 0, 0, 0.08);
+
+    transition: 0.3s;
+
+}
+
+
+.announcement:hover {
+
+    transform: translateX(8px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0, 0, 0, 0.12);
+
+}
+
+
+.announcement h3 {
+
+    color: #123c69;
+
+    margin-bottom: 8px;
+
+}
+
+
+.announcement p {
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ================= NOTICE ================= */
+
+#noticeMessage {
+
+    width: 90%;
+
+    max-width: 650px;
+
+    margin: 20px auto;
+
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+
+    background-color: #123c69;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 20px;
+
+    margin-top: 30px;
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    header {
+
+        flex-direction: column;
+
+        padding: 20px;
+
+    }
+
+
+    header h1 {
+
+        text-align: center;
+
+        font-size: 21px;
+
+    }
+
+
+    nav {
+
+        gap: 10px;
+
+    }
+
+
+    nav a {
+
+        margin: 5px;
+
+        font-size: 14px;
+
+    }
+
+
+    .hero {
+
+        padding: 60px 15px;
+
+    }
+
+
+    .hero h2 {
+
+        font-size: 28px;
+
+    }
+
+
+    .hero p {
+
+        font-size: 16px;
+
+    }
+
+
+    .section {
+
+        padding: 45px 15px;
+
+    }
+
+
+    .quick-train-card {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    #fromStation,
+    #toStation,
+    #trainInput {
+
+        width: 90%;
+
+        margin: 7px auto;
+
+        display: block;
+
+    }
+
+
+    #trains button {
+
+        margin: 6px 3px;
+
+    }
+
+
+    .train-table {
+
+        display: block;
+
+        overflow-x: auto;
+
+        font-size: 13px;
+
+    }
+
+
+    .status-card {
+
+        width: 90%;
+
+        max-width: 300px;
+
+    }
+
+
+    .card {
+
+        width: 90%;
+
+        max-width: 300px;
+
+    }
+
+}
+/* ================================
+   STATION TABLE
+================================ */
+
+.station-table-container {
+    width: 95%;
+    max-width: 900px;
+    margin: 30px auto;
+    overflow-x: auto;
+}
+
+.station-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.station-table-container th,
+.station-table-container td {
+    border: 2px solid #123c69;
+    padding: 14px 18px;
+    text-align: center;
+}
+
+.station-table-container th {
+    background-color: #123c69;
+    color: white;
+    font-weight: bold;
+}
+
+.station-table-container td {
+    color: #222;
+    background-color: white;
+}
+
+.station-table-container tr:hover td {
+    background-color: #eef5fb;
+}
+/* =====================================
+   FINAL DESIGN CORRECTIONS
+===================================== */
+
+/* Hide empty messages */
+#homeMessage:empty,
+#statusMessage:empty {
+    display: none;
+}
+
+/* Home message */
+#homeMessage:not(:empty) {
+    display: block;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: white;
+    color: #123c69;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Station status container */
+.status-container,
+.status-cards {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 25px auto;
+}
+
+/* Status cards */
+.status-card {
+    background: white;
+    width: 210px;
+    min-height: 140px;
+    padding: 25px 20px;
+    text-align: center;
+    border-radius: 12px;
+    border-top: 5px solid #123c69;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+    transition: 0.3s ease;
+}
+
+.status-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+.status-card h3 {
+    color: #123c69;
+    margin-bottom: 12px;
+}
+
+.status-open {
+    color: #16803c;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+/* Status report */
+#statusMessage {
+    width: 90%;
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #e8f5e9;
+    color: #16803c;
+    border: 1px solid #a5d6a7;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Button improvements */
+button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(18, 60, 105, 0.20);
+}
+
+/* Navigation improvements */
+nav a {
+    border-radius: 7px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 12px;
+    }
+
+    header h1 {
+        font-size: 21px;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 5px;
+    }
+
+    nav a {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    .hero {
+        padding: 55px 15px;
+    }
+
+    .hero h2 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    button {
+        max-width: 320px;
+    }
+
+    .status-container,
+    .status-cards {
+        gap: 15px;
+    }
+
+    .status-card {
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .station-table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+}

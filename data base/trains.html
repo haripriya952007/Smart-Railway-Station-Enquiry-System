@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Train Enquiry</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .enquiry-box {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .search-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .search-controls input,
+        .search-controls select {
+            padding: 12px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+            font-size: 15px;
+            min-width: 190px;
+        }
+
+        .search-controls button {
+            padding: 12px 20px;
+            background: #123c69;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .search-controls button:hover {
+            background: #0b2948;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .train-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .train-table th,
+        .train-table td {
+            padding: 13px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .train-table th {
+            background: #123c69;
+            color: white;
+        }
+
+        .train-table tr:nth-child(even) {
+            background: #f2f7fc;
+        }
+
+        #resultMessage {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .back-home {
+            background: #123c69;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🚆 Train Enquiry</h1>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="stations.html">Stations</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="fare.html">Fare</a>
+            <a href="announcements.html">Announcements</a>
+        </nav>
+    </header>
+
+    <section class="section">
+
+        <h2>🚆 Search Train Details</h2>
+
+        <div class="enquiry-box">
+
+            <div class="search-controls">
+
+                <input
+                    type="text"
+                    id="trainInput"
+                    placeholder="Enter Train Number or Name">
+
+                <select id="fromStation">
+                    <option value="">Select From Station</option>
+                </select>
+
+                <select id="toStation">
+                    <option value="">Select To Station</option>
+                </select>
+
+                <button onclick="searchTrain()">🔍 Search Train</button>
+
+                <button onclick="clearSearch()">Clear</button>
+
+            </div>
+
+            <p id="resultMessage"></p>
+
+            <div class="table-wrapper">
+
+                <table class="train-table">
+                    <thead>
+                        <tr>
+                            <th>Train Number</th>
+                            <th>Train Name</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="trainTableBody">
+                        <tr>
+                            <td colspan="6">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div style="text-align:center;">
+        <button class="back-home"
+            onclick="window.location.href='../index.html'">
+            ⬅ Back to Home
+        </button>
+    </div>
+
+    <footer>
+        <p>© 2026 Smart Railway Station Enquiry System</p>
+    </footer>
+
+    <script>
+        let allTrains = [];
+
+        async function loadTrains() {
+            const tableBody = document.getElementById("trainTableBody");
+            const message = document.getElementById("resultMessage");
+
+            try {
+                const response =
+                    await fetch("http://localhost:5000/api/trains");
+
+                if (!response.ok) {
+                    throw new Error("Unable to load trains");
+                }
+
+                allTrains = await response.json();
+
+                loadStationOptions();
+                displayTrains(allTrains);
+
+            } catch (error) {
+                console.error(error);
+
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6">Unable to load trains.</td>
+                    </tr>
+                `;
+
+                message.textContent = "";
+            }
+        }
+
+        function loadStationOptions() {
+            const fromSelect = document.getElementById("fromStation");
+            const toSelect = document.getElementById("toStation");
+
+            const stations = new Set();
+
+            allTrains.forEach(function(train) {
+                if (train.source) {
+                    stations.add(train.source.trim());
+                }
+
+                if (train.destination) {
+                    stations.add(train.destination.trim());
+                }
+            });
+
+            [...stations].sort().forEach(function(station) {
+                const fromOption = document.createElement("option");
+                fromOption.value = station;
+                fromOption.textContent = station;
+                fromSelect.appendChild(fromOption);
+
+                const toOption = document.createElement("option");
+                toOption.value = station;
+                toOption.textContent = station;
+                toSelect.appendChild(toOption);
+            });
+        }
+
+        function displayTrains(trains) {
+            const tableBody = document.getElementById("trainTableBody");
+            const message = document.getElementById("resultMessage");
+
+            if (trains.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6">No matching trains found.</td>
+                    </tr>
+                `;
+
+                message.textContent = "";
+                return;
+            }
+
+            tableBody.innerHTML = trains.map(function(train) {
+                return `
+                    <tr>
+                        <td>${train.train_number ?? "-"}</td>
+                        <td>${train.train_name ?? "-"}</td>
+                        <td>${train.source ?? "-"}</td>
+                        <td>${train.destination ?? "-"}</td>
+                        <td>${train.departure_time ?? "-"}</td>
+                        <td>${train.arrival_time ?? "-"}</td>
+                    </tr>
+                `;
+            }).join("");
+
+            message.textContent = "";
+        }
+
+        function searchTrain() {
+            const input = document
+                .getElementById("trainInput")
+                .value.trim()
+                .toLowerCase();
+
+            const from = document
+                .getElementById("fromStation")
+                .value.trim()
+                .toLowerCase();
+
+            const to = document
+                .getElementById("toStation")
+                .value.trim()
+                .toLowerCase();
+
+            const foundTrains = allTrains.filter(function(train) {
+                const number = String(train.train_number ?? "").toLowerCase();
+                const name = String(train.train_name ?? "").toLowerCase();
+                const source = String(train.source ?? "").trim().toLowerCase();
+                const destination = String(train.destination ?? "").trim().toLowerCase();
+
+                const matchesTrain =
+                    input === "" ||
+                    number.includes(input) ||
+                    name.includes(input);
+
+                const matchesFrom = from === "" || source === from;
+                const matchesTo = to === "" || destination === to;
+
+                return matchesTrain && matchesFrom && matchesTo;
+            });
+
+            displayTrains(foundTrains);
+        }
+
+        function clearSearch() {
+            document.getElementById("trainInput").value = "";
+            document.getElementById("fromStation").value = "";
+            document.getElementById("toStation").value = "";
+
+            displayTrains(allTrains);
+        }
+
+        loadTrains();
+    </script>
+
+</body>
+</html>

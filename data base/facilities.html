@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Station Facilities</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .facilities-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto;
+            text-align: center;
+        }
+
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .facility-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.1);
+            border-top: 5px solid #123c69;
+            transition: 0.3s;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .facility-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .facility-card h3 {
+            color: #123c69;
+            margin-bottom: 12px;
+        }
+
+        .facility-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 7px 16px;
+            background: #e3f8e8;
+            color: #16803c;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .details-btn {
+            display: block;
+            margin: 18px auto 0;
+            padding: 10px 20px;
+            background: #123c69;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .details-btn:hover {
+            background: #1e5a91;
+        }
+
+        .back-home {
+            background: #123c69;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 30px;
+        }
+
+        /* POPUP DESIGN */
+
+        .facility-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            animation: popup 0.3s ease;
+        }
+
+        .modal-content h2 {
+            color: #123c69;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            color: #555;
+            line-height: 1.7;
+            margin: 12px 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            border: none;
+            background: none;
+            font-size: 28px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        @keyframes popup {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🚉 Station Facilities</h1>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="trains.html">Train Enquiry</a>
+            <a href="stations.html">Stations</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="fare.html">Fare</a>
+            <a href="announcements.html">Announcements</a>
+        </nav>
+    </header>
+
+    <section class="facilities-container">
+
+        <h2>🚉 Available Station Facilities</h2>
+
+        <div class="facilities-grid">
+
+            <div class="facility-card">
+                <div class="facility-icon">🛋️</div>
+                <h3>Waiting Room</h3>
+                <p>Comfortable waiting area for passengers.</p>
+                <span class="status">Available</span>
+                <button class="details-btn" onclick="showDetails('Waiting Room')">View Details</button>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">💧</div>
+                <h3>Drinking Water</h3>
+                <p>Drinking water facility for passengers.</p>
+                <span class="status">Available</span>
+                <button class="details-btn" onclick="showDetails('Drinking Water')">View Details</button>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">🚻</div>
+                <h3>Restroom</h3>
+                <p>Restroom facility for railway passengers.</p>
+                <span class="status">Available</span>
+                <button class="details-btn" onclick="showDetails('Restroom')">View Details</button>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">🅿️</div>
+                <h3>Parking</h3>
+                <p>Vehicle parking area for visitors.</p>
+                <span class="status">Available</span>
+                <button class="details-btn" onclick="showDetails('Parking')">View Details</button>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">🍽️</div>
+                <h3>Food Court</h3>
+                <p>Food and refreshments for passengers.</p>
+                <span class="status">Available</span>
+                <button class="details-btn" onclick="showDetails('Food Court')">View Details</button>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">🚉</div>
+                <h3>Platform Information</h3>
+                <p>Information about train platforms.</p>
+                <span class="status">Available</span>
+                <button class="details-btn" onclick="showDetails('Platform Information')">View Details</button>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FACILITY DETAILS POPUP -->
+
+    <div id="facilityModal" class="facility-modal">
+
+        <div class="modal-content">
+
+            <button class="close-btn" onclick="closeDetails()">×</button>
+
+            <h2 id="modalTitle">Facility Details</h2>
+
+            <p id="modalDescription"></p>
+
+            <p>
+                <strong>Status:</strong>
+                <span class="status">Available</span>
+            </p>
+
+            <p>
+                <strong>Location:</strong>
+                Main Station Building
+            </p>
+
+            <button class="details-btn" onclick="closeDetails()">
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+    <div style="text-align:center;">
+        <button class="back-home"
+            onclick="window.location.href='../index.html'">
+            ⬅ Back to Home
+        </button>
+    </div>
+
+    <footer>
+        <p>© 2026 Smart Railway Station Enquiry System</p>
+    </footer>
+
+    <script>
+        function showDetails(facility) {
+
+            const details = {
+                "Waiting Room": "Passengers can wait comfortably before boarding their train.",
+                "Drinking Water": "Drinking water facility is provided for passengers.",
+                "Restroom": "Restroom facility is provided for passenger use.",
+                "Parking": "Vehicle parking facility is available for visitors.",
+                "Food Court": "Passengers can get food and refreshments.",
+                "Platform Information": "Passengers can check platform details before boarding."
+            };
+
+            document.getElementById("modalTitle").textContent =
+                "🚉 " + facility + " Details";
+
+            document.getElementById("modalDescription").textContent =
+                details[facility];
+
+            document.getElementById("facilityModal").style.display = "flex";
+        }
+
+        function closeDetails() {
+            document.getElementById("facilityModal").style.display = "none";
+        }
+
+        document.getElementById("facilityModal").addEventListener("click", function(event) {
+            if (event.target === this) {
+                closeDetails();
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Railway Announcements</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .announcement-section {
+            padding: 30px 15px;
+            min-height: 400px;
+        }
+
+        .announcement-section h2 {
+            text-align: center;
+            color: #123c69;
+            margin-bottom: 10px;
+        }
+
+        .announcement-intro {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .announcement-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .announcement-card {
+            background: white;
+            width: 90%;
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 22px;
+            border-left: 6px solid #123c69;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+            text-align: left;
+        }
+
+        .announcement-card h3 {
+            color: #123c69;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .announcement-card p {
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .announcement-date {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        .not-found {
+            background: white;
+            max-width: 650px;
+            margin: 25px auto;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 25px auto 35px;
+            padding: 12px 22px;
+            background: #123c69;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #0b2948;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>📢 Railway Announcements</h1>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="trains.html">Train Enquiry</a>
+            <a href="stations.html">Stations</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="fare.html">Fare Details</a>
+            <a href="facilities.html">Facilities</a>
+            <a href="booking.html">Book Ticket</a>
+        </nav>
+    </header>
+
+    <!-- Announcements Section -->
+    <section class="announcement-section">
+
+        <h2>📢 Latest Announcements</h2>
+
+        <p class="announcement-intro">
+            Railway announcements and updates for passengers.
+        </p>
+
+        <div id="announcementResult" class="announcement-container">
+            <p style="text-align:center;">Loading announcements...</p>
+        </div>
+
+    </section>
+
+    <!-- Back to Home -->
+    <a href="../index.html" class="back-btn">
+        ← Back to Home
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Smart Railway Station Enquiry System</p>
+        <p>Designed for College Project</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        async function loadAnnouncements() {
+
+            const result =
+                document.getElementById("announcementResult");
+
+            try {
+
+                const response =
+                    await fetch("http://localhost:5000/api/announcements");
+
+                if (!response.ok) {
+                    throw new Error("Unable to fetch announcements");
+                }
+
+                const announcements =
+                    await response.json();
+
+                console.log("Announcements:", announcements);
+
+                if (!Array.isArray(announcements) || announcements.length === 0) {
+
+                    result.innerHTML = `
+                        <div class="not-found">
+                            <h3>📢 No Announcements Available</h3>
+                            <p>Please check again later.</p>
+                        </div>
+                    `;
+
+                    return;
+                }
+
+                let cards = "";
+
+                announcements.forEach(function(item) {
+
+                    const title =
+                        item.title || item.announcement_title || "Railway Notice";
+
+                    const message =
+                        item.message || item.description ||
+                        item.announcement_text || "Please contact railway staff for details.";
+
+                    const date =
+                        item.date || item.announcement_date || "";
+
+                    cards += `
+                        <div class="announcement-card">
+
+                            <h3>📢 ${title}</h3>
+
+                            <p>${message}</p>
+
+                            ${date ? `<p class="announcement-date">📅 ${date}</p>` : ""}
+
+                        </div>
+                    `;
+
+                });
+
+                result.innerHTML = cards;
+
+            } catch (error) {
+
+                console.error(error);
+
+                result.innerHTML = `
+                    <div class="not-found">
+                        <h3>❌ Unable to Load Announcements</h3>
+                        <p>Please make sure the backend server is running.</p>
+                    </div>
+                `;
+            }
+        }
+
+        loadAnnouncements();
+    </script>
+
+</body>
+</html>

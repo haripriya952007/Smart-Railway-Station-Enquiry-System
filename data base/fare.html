@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Train Fare Enquiry</title>
+
+<link rel="stylesheet" href="../style.css">
+
+<style>
+    .fare-container {
+        width: 95%;
+        max-width: 1000px;
+        margin: 30px auto;
+        overflow-x: auto;
+    }
+
+    .fare-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .fare-table th {
+        background: #123c69;
+        color: white;
+        padding: 15px;
+        border: 1px solid #ddd;
+    }
+
+    .fare-table td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+        color: #222;
+    }
+
+    .fare-table tr:nth-child(even) {
+        background: #f2f7fc;
+    }
+
+    .fare-table tr:hover {
+        background: #e1efff;
+    }
+
+    .fare-amount {
+        color: #087443;
+        font-weight: bold;
+    }
+
+    .fare-message {
+        text-align: center;
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    .back-home {
+        background: #123c69;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .back-home:hover {
+        background: #0b2b4d;
+    }
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>💰 Train Fare Enquiry</h1>
+
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="stations.html">Stations</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="fare.html">Fare</a>
+    </nav>
+</header>
+
+<section class="section">
+
+    <h2>💰 Available Train Fares</h2>
+
+    <p>Fare details loaded from MySQL database.</p>
+
+    <div id="fareResult">
+        <p class="fare-message">Loading fare details...</p>
+    </div>
+
+</section>
+
+<div style="text-align:center; margin:25px;">
+    <button
+        class="back-home"
+        onclick="window.location.href='../index.html'">
+        ⬅ Back to Home
+    </button>
+</div>
+
+<footer>
+    <p>© 2026 Smart Railway Station Enquiry System</p>
+</footer>
+
+<script>
+    async function loadFares() {
+
+        const result = document.getElementById("fareResult");
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:5000/api/fares"
+            );
+
+            if (!response.ok) {
+                throw new Error("Unable to fetch fare data");
+            }
+
+            const fares = await response.json();
+
+            console.log("Fares:", fares);
+
+            if (!Array.isArray(fares) || fares.length === 0) {
+
+                result.innerHTML = `
+                    <div class="fare-message">
+                        <h3>💰 No Fare Details Available</h3>
+                        <p>No fare records found in the database.</p>
+                    </div>
+                `;
+
+                return;
+            }
+
+            let rows = "";
+
+            fares.forEach(function(fare) {
+
+                rows += `
+                    <tr>
+                        <td>${fare.train_id ?? "-"}</td>
+                        <td>${fare.from_station ?? "-"}</td>
+                        <td>${fare.to_station ?? "-"}</td>
+                        <td class="fare-amount">
+                            ₹${fare.fare ?? "-"}
+                        </td>
+                    </tr>
+                `;
+
+            });
+
+            result.innerHTML = `
+                <div class="fare-container">
+
+                    <table class="fare-table">
+
+                        <thead>
+                            <tr>
+                                <th>Train ID</th>
+                                <th>From Station</th>
+                                <th>To Station</th>
+                                <th>Fare (₹)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            ${rows}
+                        </tbody>
+
+                    </table>
+
+                </div>
+            `;
+
+        } catch (error) {
+
+            console.error("Fare error:", error);
+
+            result.innerHTML = `
+                <div class="fare-message">
+                    <h3>❌ Unable to Load Fare Details</h3>
+                    <p>Please make sure the backend server is running.</p>
+                </div>
+            `;
+
+        }
+    }
+
+    loadFares();
+</script>
+
+</body>
+</html>
